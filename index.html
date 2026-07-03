@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Instaflix - Log in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="lang-selector">English (US)</div>
+  <div class="wrapper">
+    <div class="card">
+      <img src="icon.svg" alt="Instaflix" class="app-icon" />
+      <form id="login-form">
+        <div class="field">
+          <input type="text" id="identifier" placeholder="Username, email or mobile number" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="primary" id="login-btn">Log in</button>
+      </form>
+      <div id="message" class="message"></div>
+      <a href="#" class="small-link" id="forgot-link">Forgot password?</a>
+    </div>
+    <div class="footer-card">
+      <a href="signup.html" class="secondary-btn">Create new account</a>
+    </div>
+    <div class="brand-footer">Instaflix</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const form = document.getElementById("login-form");
+    const messageEl = document.getElementById("message");
+    const loginBtn = document.getElementById("login-btn");
+    const forgotLink = document.getElementById("forgot-link");
+
+    async function resolveEmail(identifier) {
+      if (identifier.includes("@")) return identifier;
+      const { data, error } = await supabaseClient.rpc("get_email_for_username", { uname: identifier });
+      if (error || !data) return null;
+      return data;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      messageEl.textContent = "";
+      messageEl.className = "message";
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Logging in...";
+
+      const identifier = document.getElementById("identifier").value.trim();
+      const password = document.getElementById("password").value;
+
+      const email = await resolveEmail(identifier);
+
+      if (!email) {
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Log in";
+        messageEl.textContent = "Invalid login credentials.";
+        messageEl.className = "message error";
+        return;
+      }
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Log in";
+
+      if (error) {
+        messageEl.textContent = error.message;
+        messageEl.className = "message error";
+        return;
+      }
+
+      messageEl.textContent = "Logged in! Redirecting...";
+      messageEl.className = "message success";
+      window.location.href = "home.html";
+    });
+
+    forgotLink.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const identifier = document.getElementById("identifier").value.trim();
+      if (!identifier) {
+        messageEl.textContent = "Enter your username or email above first.";
+        messageEl.className = "message error";
+        return;
+      }
+      const email = await resolveEmail(identifier);
+      if (!email) {
+        messageEl.textContent = "No account found for that username or email.";
+        messageEl.className = "message error";
+        return;
+      }
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+      if (error) {
+        messageEl.textContent = error.message;
+        messageEl.className = "message error";
+        return;
+      }
+      messageEl.textContent = "Password reset link sent to your email.";
+      messageEl.className = "message success";
+    });
+  </script>
+</body>
+</html>

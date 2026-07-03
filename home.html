@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Instaflix - Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <img src="icon.svg" alt="Instaflix" class="app-icon" style="width:60px; height:60px; margin-bottom: 20px;" />
+      <p id="welcome" style="color:#e4e6eb; font-size:15px;">Loading...</p>
+      <button class="primary" id="logout-btn" style="margin-top:20px;">Log out</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const welcomeEl = document.getElementById("welcome");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    (async () => {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) {
+        window.location.href = "index.html";
+        return;
+      }
+      const username = session.user.user_metadata?.username || session.user.email;
+      welcomeEl.textContent = `Welcome, ${username}!`;
+    })();
+
+    logoutBtn.addEventListener("click", async () => {
+      await supabaseClient.auth.signOut();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

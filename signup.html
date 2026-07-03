@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Instaflix - Sign up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="lang-selector">English (US)</div>
+  <div class="wrapper">
+    <div class="card">
+      <img src="icon.svg" alt="Instaflix" class="app-icon" />
+      <p style="color:#8a8d91; font-weight:600; font-size:17px; margin: -10px 0 20px;">
+        Sign up to save your stories.
+      </p>
+      <form id="signup-form">
+        <div class="field">
+          <input type="email" id="email" placeholder="Email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <input type="text" id="username" placeholder="Username" autocomplete="username" minlength="3" maxlength="30" pattern="[a-zA-Z0-9._]+" title="Letters, numbers, periods and underscores only" required />
+        </div>
+        <div class="field">
+          <input type="password" id="password" placeholder="Password" autocomplete="new-password" minlength="6" required />
+        </div>
+        <button type="submit" class="primary" id="signup-btn">Sign up</button>
+      </form>
+      <div id="message" class="message"></div>
+      <p class="terms">
+        People who use our service may have uploaded your contact information to Instaflix. Learn more.
+      </p>
+    </div>
+    <div class="footer-card">
+      Have an account? <a href="index.html">Log in</a>
+    </div>
+    <div class="brand-footer">Instaflix</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const form = document.getElementById("signup-form");
+    const messageEl = document.getElementById("message");
+    const signupBtn = document.getElementById("signup-btn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      messageEl.textContent = "";
+      messageEl.className = "message";
+      signupBtn.disabled = true;
+      signupBtn.textContent = "Signing up...";
+
+      const email = document.getElementById("email").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { username },
+        },
+      });
+
+      signupBtn.disabled = false;
+      signupBtn.textContent = "Sign up";
+
+      if (error) {
+        messageEl.textContent = error.message;
+        messageEl.className = "message error";
+        return;
+      }
+
+      messageEl.textContent = "Account created! Check your email to confirm, then log in.";
+      messageEl.className = "message success";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
