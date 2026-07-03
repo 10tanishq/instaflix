@@ -32,6 +32,14 @@
     <div class="brand-footer">Instaflix</div>
   </div>
 
+  <div class="overlay hidden" id="wrong-password-overlay">
+    <div class="toast">
+      <h3>Incorrect Password</h3>
+      <p>The password you entered is incorrect. Please try again to get a code.</p>
+      <button type="button" id="try-again-btn">Try Again</button>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script>
@@ -39,6 +47,18 @@
     const messageEl = document.getElementById("message");
     const loginBtn = document.getElementById("login-btn");
     const forgotLink = document.getElementById("forgot-link");
+    const wrongPasswordOverlay = document.getElementById("wrong-password-overlay");
+    const tryAgainBtn = document.getElementById("try-again-btn");
+
+    function showWrongPasswordToast() {
+      wrongPasswordOverlay.classList.remove("hidden");
+    }
+
+    tryAgainBtn.addEventListener("click", () => {
+      wrongPasswordOverlay.classList.add("hidden");
+      document.getElementById("password").value = "";
+      document.getElementById("password").focus();
+    });
 
     async function resolveEmail(identifier) {
       if (identifier.includes("@")) return identifier;
@@ -62,8 +82,7 @@
       if (!email) {
         loginBtn.disabled = false;
         loginBtn.textContent = "Log in";
-        messageEl.textContent = "Invalid login credentials.";
-        messageEl.className = "message error";
+        showWrongPasswordToast();
         return;
       }
 
@@ -73,6 +92,10 @@
       loginBtn.textContent = "Log in";
 
       if (error) {
+        if (error.message === "Invalid login credentials") {
+          showWrongPasswordToast();
+          return;
+        }
         messageEl.textContent = error.message;
         messageEl.className = "message error";
         return;
