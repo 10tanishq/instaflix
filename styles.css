@@ -2,52 +2,92 @@
   box-sizing: border-box;
 }
 
+html {
+  background: #111f29;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: #101823;
-  color: #e4e6eb;
+  background: #111f29;
+  color: #f6f8fb;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 0 18px;
 }
 
 .lang-selector {
   text-align: center;
-  color: #8a8d91;
-  font-size: 15px;
-  margin: 10px 0 40px;
+  color: #c4ccd5;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 34px 0 0;
 }
 
 .wrapper {
   width: 100%;
-  max-width: 350px;
+  max-width: 430px;
   margin: 0 auto;
+  min-height: calc(100vh - 68px);
+  min-height: calc(100dvh - 68px);
+  display: flex;
+  flex-direction: column;
 }
 
 .card {
   text-align: center;
-  padding: 0 10px;
+  padding: clamp(56px, 12vh, 132px) 0 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
 }
 
 .app-icon {
-  width: 90px;
-  height: 90px;
-  margin: 20px auto 40px;
+  width: 94px;
+  height: 94px;
+  margin: 0 auto;
   display: block;
 }
 
+.compact-icon {
+  width: 68px;
+  height: 68px;
+}
+
+.brand-name,
 .logo {
   font-family: "Grand Hotel", "Brush Script MT", cursive;
-  font-size: 3rem;
+  font-size: 3.15rem;
   font-weight: 400;
-  margin: 10px 0 30px;
-  color: #e4e6eb;
+  line-height: 1;
+  margin: 16px 0 54px;
+  color: #f6f8fb;
+}
+
+.signup-page .brand-name,
+.home-page .brand-name {
+  margin-bottom: 24px;
+}
+
+.signup-tagline {
+  color: #aab5c2;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 22px;
+}
+
+.welcome-message {
+  color: #f6f8fb;
+  font-size: 17px;
+  margin: 0;
 }
 
 form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -59,32 +99,37 @@ form {
 
 input {
   width: 100%;
-  padding: 16px 16px;
-  background: transparent;
-  border: 1px solid #3d4148;
-  border-radius: 12px;
-  font-size: 15px;
-  color: #e4e6eb;
+  height: 64px;
+  padding: 0 20px;
+  background: rgba(18, 34, 45, 0.84);
+  border: 1.5px solid #4b6070;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f6f8fb;
 }
 
 input::placeholder {
-  color: #8a8d91;
+  color: #9faabb;
 }
 
 input:focus {
   outline: none;
-  border-color: #6a6d72;
+  border-color: #78a3c9;
+  box-shadow: 0 0 0 3px rgba(69, 153, 255, 0.18);
 }
 
 button.primary {
-  margin-top: 10px;
-  padding: 15px 8px;
+  width: 100%;
+  height: 58px;
+  margin-top: 18px;
+  padding: 0 18px;
   background: #0977f7;
   color: #fff;
   border: none;
-  border-radius: 26px;
+  border-radius: 999px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 19px;
   cursor: pointer;
 }
 
@@ -98,7 +143,7 @@ button.primary:disabled {
   align-items: center;
   gap: 18px;
   margin: 18px 0;
-  color: #8a8d91;
+  color: #aab5c2;
   font-size: 13px;
   font-weight: 600;
 }
@@ -108,13 +153,13 @@ button.primary:disabled {
   content: "";
   flex: 1;
   height: 1px;
-  background: #3d4148;
+  background: #3d5364;
 }
 
 .message {
-  min-height: 18px;
+  min-height: 20px;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .message.error {
@@ -126,19 +171,20 @@ button.primary:disabled {
 }
 
 .small-link {
-  color: #e4e6eb;
-  font-size: 16px;
-  font-weight: 600;
+  color: #f6f8fb;
+  font-size: 19px;
+  font-weight: 500;
   text-decoration: none;
-  margin-top: 16px;
+  margin-top: 26px;
   display: inline-block;
 }
 
 .footer-card {
-  padding: 30px 10px 20px;
+  padding: 28px 0 16px;
   text-align: center;
   font-size: 14px;
-  margin-top: 30px;
+  margin-top: auto;
+  color: #aab5c2;
 }
 
 .footer-card a {
@@ -148,42 +194,44 @@ button.primary:disabled {
 }
 
 .secondary-btn {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  padding: 14px 8px;
+  min-height: 58px;
+  padding: 0 18px;
   background: transparent;
   color: #4599ff !important;
-  border: 1px solid #4599ff;
-  border-radius: 26px;
+  border: 1.5px solid #4599ff;
+  border-radius: 999px;
   font-weight: 600;
-  font-size: 16px;
-  box-sizing: border-box;
+  font-size: 19px;
 }
 
 .terms {
   text-align: center;
   font-size: 12px;
-  color: #8a8d91;
+  color: #aab5c2;
   margin-top: 20px;
   line-height: 1.6;
 }
 
 .brand-footer {
   text-align: center;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
-  color: #8a8d91;
-  margin-top: 24px;
-  padding-bottom: 20px;
+  color: #eef3f8;
+  margin-top: 0;
+  padding-bottom: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.brand-footer svg {
-  width: 20px;
-  height: 20px;
+.footer-logo {
+  width: 25px;
+  height: 25px;
 }
 
 .overlay {
@@ -202,7 +250,7 @@ button.primary:disabled {
 }
 
 .toast {
-  background: #ededed;
+  background: #f2f4f7;
   border-radius: 18px;
   padding: 30px 22px;
   max-width: 270px;
@@ -220,7 +268,7 @@ button.primary:disabled {
 .toast p {
   margin: 0 0 22px;
   font-size: 14px;
-  color: #65676b;
+  color: #5f6770;
   line-height: 1.5;
 }
 
@@ -237,45 +285,86 @@ button.primary:disabled {
   cursor: pointer;
 }
 
-/* Mobile: fit the whole login page in one screen (no scroll) */
-@media (max-width: 480px) {
+@media (min-width: 700px) {
   body {
-    padding: 8px 16px;
     justify-content: center;
   }
+
   .lang-selector {
-    margin: 4px 0 14px;
+    margin-top: 22px;
   }
+
+  .wrapper {
+    min-height: min(780px, calc(100vh - 56px));
+    min-height: min(780px, calc(100dvh - 56px));
+  }
+
+  .card {
+    padding-top: 78px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0 18px;
+  }
+
+  .lang-selector {
+    font-size: 17px;
+    margin-top: 30px;
+  }
+
   .app-icon {
-    width: 60px;
-    height: 60px;
-    margin: 4px auto 18px;
+    width: 88px;
+    height: 88px;
   }
+
+  .brand-name {
+    font-size: 2.8rem;
+    margin-bottom: 44px;
+  }
+
   form {
-    gap: 10px;
+    gap: 12px;
   }
+
   input {
-    padding: 13px 14px;
+    height: 58px;
+    padding: 0 18px;
+    font-size: 16px;
   }
+
   button.primary {
-    margin-top: 6px;
-    padding: 13px 8px;
+    height: 56px;
+    margin-top: 18px;
+    font-size: 18px;
   }
+
   .small-link {
-    margin-top: 12px;
+    margin-top: 24px;
+    font-size: 18px;
   }
+
   .message {
-    margin-top: 6px;
+    margin-top: 10px;
   }
+
   .footer-card {
-    margin-top: 16px;
-    padding: 16px 10px 8px;
+    padding: 24px 0 14px;
   }
+
   .secondary-btn {
-    padding: 12px 8px;
+    min-height: 54px;
+    font-size: 18px;
   }
+
   .brand-footer {
-    margin-top: 12px;
-    padding-bottom: 4px;
+    font-size: 18px;
+    padding-bottom: 18px;
+  }
+
+  .footer-logo {
+    width: 23px;
+    height: 23px;
   }
 }

@@ -1,6 +1,6 @@
 # Instaflix
 
-Instagram-style signup/login pages backed by Supabase auth + database. Plain HTML/CSS/JS, no build step required.
+Mobile-first Instaflix signup/login pages backed by Supabase auth + database. Plain HTML/CSS/JS, no build step required.
 
 ## 1. Create a Supabase project
 

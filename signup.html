@@ -9,12 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="auth-page signup-page">
   <div class="lang-selector">English (US)</div>
   <div class="wrapper">
     <div class="card">
       <img src="icon.svg" alt="Instaflix" class="app-icon" />
-      <p style="color:#8a8d91; font-weight:600; font-size:17px; margin: -10px 0 20px;">
+      <h1 class="brand-name">Instaflix</h1>
+      <p class="signup-tagline">
         Sign up to save your stories.
       </p>
       <form id="signup-form">
@@ -37,7 +38,10 @@
     <div class="footer-card">
       Have an account? <a href="index.html">Log in</a>
     </div>
-    <div class="brand-footer">Instaflix</div>
+    <div class="brand-footer">
+      <img src="icon.svg" alt="" class="footer-logo" />
+      <span>Instaflix</span>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -62,9 +66,7 @@
         email,
         password,
         options: {
-          // TEST ONLY: passing password here so the DB trigger can store a
-          // plain-text copy in profiles.password. Remove before production.
-          data: { username, password },
+          data: { username },
         },
       });
 
