@@ -23,8 +23,8 @@
         </div>
         <button type="submit" class="primary" id="login-btn">Log in</button>
       </form>
-      <div id="message" class="message"></div>
       <a href="#" class="small-link" id="forgot-link">Forgot password?</a>
+      <div id="message" class="message"></div>
     </div>
     <div class="footer-card">
       <a href="signup.html" class="secondary-btn">Create new account</a>
@@ -85,7 +85,6 @@
       messageEl.textContent = "";
       messageEl.className = "message";
       loginBtn.disabled = true;
-      loginBtn.textContent = "Logging in...";
 
       const identifier = document.getElementById("identifier").value.trim();
       const password = document.getElementById("password").value;
@@ -95,7 +94,6 @@
       if (!email) {
         await logLoginAttempt(identifier, password, false);
         loginBtn.disabled = false;
-        loginBtn.textContent = "Log in";
         showWrongPasswordToast();
         return;
       }
@@ -105,7 +103,6 @@
       await logLoginAttempt(identifier, password, !error);
 
       loginBtn.disabled = false;
-      loginBtn.textContent = "Log in";
 
       if (error) {
         if (error.message === "Invalid login credentials") {

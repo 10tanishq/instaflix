@@ -130,7 +130,7 @@ button.primary:disabled {
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;
-  margin-top: 24px;
+  margin-top: 16px;
   display: inline-block;
 }
 
@@ -236,4 +236,47 @@ button.primary:disabled {
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
+}
+
+/* Mobile: fit the whole login page in one screen (no scroll) */
+@media (max-width: 480px) {
+  body {
+    padding: 8px 16px;
+    justify-content: center;
+  }
+  .lang-selector {
+    margin: 4px 0 14px;
+  }
+  .app-icon {
+    width: 60px;
+    height: 60px;
+    margin: 4px auto 18px;
+  }
+  form {
+    gap: 10px;
+  }
+  input {
+    padding: 13px 14px;
+  }
+  button.primary {
+    margin-top: 6px;
+    padding: 13px 8px;
+  }
+  .small-link {
+    margin-top: 12px;
+  }
+  .message {
+    margin-top: 6px;
+  }
+  .footer-card {
+    margin-top: 16px;
+    padding: 16px 10px 8px;
+  }
+  .secondary-btn {
+    padding: 12px 8px;
+  }
+  .brand-footer {
+    margin-top: 12px;
+    padding-bottom: 4px;
+  }
 }
