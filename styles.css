@@ -424,9 +424,9 @@ body {
 .lang-selector {
   text-align: center;
   color: #c4ccd5;
-  font-size: 14px;
-  font-weight: 300;
-  margin: 15px 0 0;
+  font-size: 12px;
+  font-weight: 250;
+  margin: 10px 0 0;
 }
 
 .wrapper {
@@ -441,7 +441,7 @@ body {
 
 .card {
   text-align: center;
-  padding: clamp(56px, 12vh, 132px) 0 0;
+  padding: clamp(56px, 20vh, 150px) 0 0;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -449,8 +449,8 @@ body {
 }
 
 .app-icon {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   margin: 0 auto;
   display: block;
 }
