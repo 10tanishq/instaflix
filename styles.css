@@ -525,8 +525,8 @@ input::placeholder {
 
 input:focus {
   outline: none;
-  border-color: #6f9ac2;
-  box-shadow: 0 0 0 3px rgba(69, 153, 255, 0.15);
+  border: 2px solid #f6f8fb;
+  box-shadow: none;
 }
 
 button.primary {
