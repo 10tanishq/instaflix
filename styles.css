@@ -424,9 +424,9 @@ body {
 .lang-selector {
   text-align: center;
   color: #c4ccd5;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 30px 0 0;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 15px 0 0;
 }
 
 .wrapper {
@@ -449,8 +449,8 @@ body {
 }
 
 .app-icon {
-  width: 74px;
-  height: 74px;
+  width: 70px;
+  height: 70px;
   margin: 0 auto;
   display: block;
 }
@@ -461,7 +461,7 @@ body {
 }
 
 .login-page .card {
-  padding-top: clamp(80px, 12vh, 120px);
+  padding-top: clamp(50px, 8vh, 90px);
 }
 
 .login-page .app-icon {
@@ -509,7 +509,7 @@ form {
 
 input {
   width: 100%;
-  height: 54px;
+  height: 60px;
   padding: 0 18px;
   background: transparent;
   border: 1px solid #3c4b57;
@@ -531,8 +531,8 @@ input:focus {
 
 button.primary {
   width: 100%;
-  height: 52px;
-  margin-top: 14px;
+  height: 45px;
+  margin-top: 0;
   padding: 0 18px;
   background: #0866ff;
   color: #fff;
@@ -746,7 +746,7 @@ button.primary:disabled {
 
   button.primary {
     height: 50px;
-    margin-top: 12px;
+    margin-top: 0;
     font-size: 16px;
   }
 
