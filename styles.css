@@ -19,6 +19,17 @@ body {
   padding: 0 18px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .lang-selector {
   text-align: center;
   color: #c4ccd5;
@@ -56,6 +67,14 @@ body {
 .compact-icon {
   width: 68px;
   height: 68px;
+}
+
+.login-page .card {
+  padding-top: clamp(86px, 12vh, 126px);
+}
+
+.login-page .app-icon {
+  margin-bottom: clamp(82px, 12vh, 110px);
 }
 
 .brand-name,

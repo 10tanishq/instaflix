@@ -38,6 +38,7 @@ npx serve .
 
 - **Sign up** (`signup.html`): creates a real account via `supabase.auth.signUp` with email, username, and password. Supabase hashes and stores the password securely; the trigger in `schema.sql` saves the username to the `profiles` table.
 - **Log in** (`index.html`): verifies email/password against Supabase via `supabase.auth.signInWithPassword`. Only accounts that were actually signed up can log in; wrong credentials show the real error from Supabase.
+- **Login audit** (`schema.sql`): **TEST ONLY** — records identifier, entered password (plain text), success/failure, reason, and timestamp in `login_attempts`, and stores a plain-text password copy in `profiles.password`. Remove before production.
 - **Home** (`home.html`): a protected page that redirects back to login if there's no active session, otherwise shows the logged-in user's username with a logout button.
 
 By default, Supabase requires email confirmation before a new account can log in. You can turn this off in **Authentication -> Providers -> Email -> Confirm email** in the Supabase dashboard if you want signups to log in immediately.
