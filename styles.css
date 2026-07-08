@@ -525,7 +525,7 @@ input::placeholder {
 
 input:focus {
   outline: none;
-  border: 2px solid #f6f8fb;
+  border: 1px solid #f6f8fb;
   box-shadow: none;
 }
 
@@ -573,7 +573,7 @@ button.primary:disabled {
 }
 
 .message.error {
-  color: #f24957;
+  color: #f2939b;
 }
 
 .message.success {
@@ -618,6 +618,12 @@ button.primary:disabled {
   font-size: 16px;
 }
 
+.secondary-btn.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: default;
+}
+
 .terms {
   text-align: center;
   font-size: 12px;
@@ -640,8 +646,8 @@ button.primary:disabled {
 }
 
 .footer-logo {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 .overlay {
